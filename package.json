@@ -5,11 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon dist/app.js"
+    "start": "dotenvx run -- nodemon api/index.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@dotenvx/dotenvx": "^1.35.0",
+    "@vercel/edge-config": "^1.4.0",
     "axios": "^1.7.9",
     "body-parser": "^1.19.0",
     "express": "^4.21.2"

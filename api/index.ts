@@ -1,20 +1,19 @@
-// import { VercelRequest, VercelResponse } from "@vercel/node";
-
-// export default async (req: VercelRequest, res: VercelResponse) => {
-//   return res.status(200).json({message: 'hello world'});
-// };
-
 import express, { Request, Response, NextFunction } from 'express';
 import { json } from 'body-parser';
 
-import todoRoutes from '../src/routes/todos';
-import helloRoutes from '../src/routes/hello';
+import '@dotenvx/dotenvx';
+
+import todoRoutes from './src/routes/todos';
+import helloRoutes from './src/routes/hello';
+import greetingsRoutes from './src/routes/greetings';
 
 const app = express();
 
 app.use(json());
 
 app.use('/', helloRoutes);
+
+app.use('/greetings', greetingsRoutes);
 
 app.use('/todos', todoRoutes);
 
