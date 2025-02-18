@@ -7,7 +7,7 @@ const edgeConfig = createClient(process.env.EDGE_CONFIG);
 
 export const createTodo: RequestHandler = (req, res, next) => {
     const text = (req.body as {text: string}).text;
-    const newTodo = new Todo(Math.random().toString(), text);
+    const newTodo = new Todo(Math.random().toString(), text, 0);
 
     TODOS.push(newTodo);
     res.status(201).json({ message: 'Created the todo.', createdTodo: newTodo });
@@ -20,14 +20,14 @@ export const getTodos: RequestHandler = async(req, res, next) => {
 
 export const updateTodos: RequestHandler<{id: string}> = (req, res, next) => {
     const todoId = req.params.id;
-    const updatedText = (req.body as {text:string}).text;
+    const updated = (req.body as {text:string, status:number});
     const todoIndex = TODOS.findIndex(todo => todo.id === todoId);
 
     if(todoIndex < 0) {
         throw new Error('could not find todo!');
     }
 
-    TODOS[todoIndex] = new Todo(TODOS[todoIndex].id, updatedText);
+    TODOS[todoIndex] = new Todo(TODOS[todoIndex].id, updated.text, updated.status);
     res.json({ message: 'Updated!', updatedTodo: TODOS[todoIndex]});
 };
 
