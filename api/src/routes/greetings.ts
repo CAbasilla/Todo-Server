@@ -6,9 +6,9 @@ const router = Router();
 const getGreetings: RequestHandler = async(req, res, next) => {
     const edgeConfig = createClient(process.env.EDGE_CONFIG);
 
-    const greeting = await edgeConfig.get('greeting');
+    const todo = await edgeConfig.get('todo');
 
-    res.status(200).json(greeting);
+    res.status(200).json(todo);
 }
 
 router.get('/', getGreetings);

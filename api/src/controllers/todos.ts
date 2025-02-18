@@ -1,7 +1,9 @@
 import { RequestHandler } from 'express';
 import { Todo } from '../models/todo';
+import { createClient } from '@vercel/edge-config';
 
 const TODOS: Todo[] = [];
+const edgeConfig = createClient(process.env.EDGE_CONFIG);
 
 export const createTodo: RequestHandler = (req, res, next) => {
     const text = (req.body as {text: string}).text;
@@ -11,8 +13,9 @@ export const createTodo: RequestHandler = (req, res, next) => {
     res.status(201).json({ message: 'Created the todo.', createdTodo: newTodo });
 };
 
-export const getTodos: RequestHandler = (req, res, next) => {
-    res.json({ todos: TODOS });
+export const getTodos: RequestHandler = async(req, res, next) => {
+    const todo = await edgeConfig.get('todo') as Todo;
+    res.json({ todos: todo });
 };
 
 export const updateTodos: RequestHandler<{id: string}> = (req, res, next) => {
