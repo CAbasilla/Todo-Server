@@ -11,7 +11,7 @@
   "license": "ISC",
   "dependencies": {
     "@dotenvx/dotenvx": "^1.35.0",
-    "@vercel/edge-config": "^1.4.0",
+    "@supabase/supabase-js": "^2.48.1",
     "axios": "^1.7.9",
     "body-parser": "^1.19.0",
     "express": "^4.21.2"
@@ -21,6 +21,7 @@
     "@types/node": "^22.13.1",
     "@vercel/node": "^5.1.2",
     "nodemon": "^1.19.4",
+    "supabase": "^2.12.1",
     "vercel": "^41.0.2"
   }
 }
