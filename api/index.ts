@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
 import { json } from 'body-parser';
 
 import '@dotenvx/dotenvx';
@@ -9,7 +10,14 @@ import greetingsRoutes from './src/routes/greetings';
 
 const app = express();
 
+app.use(cors());
 app.use(json());
+
+app.use(cors({
+    origin: 'http://localhost:8081',  // Or your React Native app's origin
+    methods: 'GET,POST,PATCH,DELETE',
+    allowedHeaders: 'Content-Type, Authorization'
+  }));
 
 app.use('/', helloRoutes);
 
