@@ -22,10 +22,33 @@ export const createTodo: RequestHandler = async(req, res, next) => {
     res.status(201).json({ message: 'Created the todo.', createdTodo: data });
 };
 
-export const getTodos: RequestHandler = async(req, res, next) => {
+export const getAllTodos: RequestHandler = async(req, res, next) => {
     let { data: todo, error } = await supabase
     .from('todo')
     .select('*');
+    if(error) {
+        throw new Error(error.message);
+    }
+    res.json({ todos: todo });
+};
+export const getTodos: RequestHandler<{id: string}> = async(req, res, next) => {
+    const todoId = req.params.id;
+    let { data: todo, error } = await supabase
+    .from('todo')
+    .select('*')
+    .eq('id', todoId);
+    if(error) {
+        throw new Error(error.message);
+    }
+    res.json({ todo: todo });
+};
+
+export const getTodoStats: RequestHandler<{status: string}> = async(req, res, next) => {
+    const todoStats = req.params.status;
+    let { data: todo, error } = await supabase
+    .from('todo')
+    .select('*')
+    .eq('status', todoStats);
     if(error) {
         throw new Error(error.message);
     }
